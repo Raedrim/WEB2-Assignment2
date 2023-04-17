@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import PokeList from "./components/PokeList";
 import About from "./components/About";
 import { Navbar, Nav } from "react-bootstrap";
@@ -12,10 +12,10 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Link className="nav-link" to="/WEB2-Assignment2/pokedex">
+            <Link className="nav-link" to="/pokedex">
               Pokedex
             </Link>
-            <Link className="nav-link" to="/WEB2-Assignment2/about">
+            <Link className="nav-link" to="/about">
               About
             </Link>
           </Nav>
@@ -23,8 +23,10 @@ function App() {
       </Navbar>
 
       <Routes>
-        <Route path="/WEB2-Assignment2/pokedex" element={<PokeList />} />
-        <Route path="/WEB2-Assignment2/about" element={<About />} />
+        <Route path="/pokedex" element={<PokeList />} />
+        <Route path="/about" element={<About />} />
+        {/* default redirect to home page */}
+        <Route path="*" element={<PokeList />} />
       </Routes>
     </BrowserRouter>
   );
