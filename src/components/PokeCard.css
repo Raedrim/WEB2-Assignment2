@@ -1,0 +1,63 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.card h2 {
+  margin-top: 0;
+  font-size: 1.5rem;
+  color: white;
+  text-shadow: 1px 1px black;
+}
+
+.card img {
+  width: 300px;
+  height: 300px;
+}
+
+.card p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: white;
+  text-shadow: 1px 1px black;
+}
+
+.card span {
+  display: inline-block;
+  margin: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px black;
+  border: 0.5px solid gray;
+}
+
+.modal-header {
+  background-color: #212529;
+  color: white;
+  border-bottom: none;
+}
+
+.modal-body {
+  text-align: left;
+}
+
+.modal-image {
+  display: block;
+  margin: 0 auto;
+}
+
+.stat-name {
+  font-weight: bold;
+  color: black;
+}

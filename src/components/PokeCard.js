@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Row, Col } from "react-bootstrap";
+import "./PokeCard.css"; // import CSS file
+
 
 const PokeCard = ({ pokemon, id }) => {
   const { name } = pokemon;
+
   const [pokemonData, setPokemonData] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (!id) {
@@ -20,12 +23,11 @@ const PokeCard = ({ pokemon, id }) => {
   }, [id]);
 
   const handleCardClick = () => {
-    setIsModalOpen(true);
+    setShow(true);
   };
 
-  const handleCloseModal = () => {
-    console.log("Modal closed");
-    setIsModalOpen(false);
+  const handleClose = () => {
+    setShow(false);
   };
 
   if (!pokemonData) {
@@ -34,121 +36,147 @@ const PokeCard = ({ pokemon, id }) => {
 
   const { types, sprites, stats, abilities, height, weight } = pokemonData;
 
-  // Long switch statement to set background color based on the Pokemon's type
-  let bgColor = "";
-  switch (types[0].type.name) {
-    case "normal":
-      bgColor = "#A8A878";
-      break;
-    case "fire":
-      bgColor = "#F08030";
-      break;
-    case "water":
-      bgColor = "#6890F0";
-      break;
-    case "grass":
-      bgColor = "#78C850";
-      break;
-    case "electric":
-      bgColor = "#F8D030";
-      break;
-    case "ice":
-      bgColor = "#98D8D8";
-      break;
-    case "fighting":
-      bgColor = "#C03028";
-      break;
-    case "poison":
-      bgColor = "#A040A0";
-      break;
-    case "ground":
-      bgColor = "#E0C068";
-      break;
-    case "flying":
-      bgColor = "#A890F0";
-      break;
-    case "psychic":
-      bgColor = "#F85888";
-      break;
-    case "bug":
-      bgColor = "#A8B820";
-      break;
-    case "rock":
-      bgColor = "#B8A038";
-      break;
-    case "ghost":
-      bgColor = "#705898";
-      break;
-    case "dragon":
-      bgColor = "#7038F8";
-      break;
-    case "dark":
-      bgColor = "#705848";
-      break;
-    case "steel":
-      bgColor = "#B8B8D0";
-      break;
-    case "fairy":
-      bgColor = "#EE99AC";
-      break;
-    default:
-      bgColor = "#68A090";
-  }
+  // Create an array of background colors for each type of the Pokemon
+  const typeColors = types.map((type) => {
+    switch (type.type.name) {
+      case "normal":
+        return "#A8A878";
+      case "fire":
+        return "#F08030";
+      case "water":
+        return "#6890F0";
+      case "grass":
+        return "#78C850";
+      case "electric":
+        return "#F8D030";
+      case "ice":
+        return "#98D8D8";
+      case "fighting":
+        return "#C03028";
+      case "poison":
+        return "#A040A0";
+      case "ground":
+        return "#E0C068";
+      case "flying":
+        return "#A890F0";
+      case "psychic":
+        return "#F85888";
+      case "bug":
+        return "#A8B820";
+      case "rock":
+        return "#B8A038";
+      case "ghost":
+        return "#705898";
+      case "dragon":
+        return "#7038F8";
+      case "dark":
+        return "#705848";
+      case "steel":
+        return "#B8B8D0";
+      case "fairy":
+        return "#EE99AC";
+      default:
+        return "#68A090";
+    }
+  });
+
+  // If the Pokemon has multiple types, create a gradient background
+  const bgColor =
+    typeColors.length > 1
+      ? `linear-gradient(to right, ${typeColors.join(", ")})`
+      : typeColors[0];
 
   return (
     <div
       className="card"
       onClick={handleCardClick}
-      style={{ backgroundColor: bgColor }}
+      style={{ background: bgColor }}
     >
       {sprites && <img src={sprites.front_default} alt={name} />}
       <h2>{name.charAt(0).toUpperCase() + name.slice(1)}</h2>
       <p>ID: {id}</p>
-      {types && <p>Type: {types[0].type.name}</p>}
-      <Modal show={isModalOpen} onHide={handleCloseModal}>
+      {types && (
+        <p>
+          Type:{" "}
+          {types.map((type, index) => (
+            <span
+              key={type.type.name}
+              className={`type-${type.type.name}`}
+              style={{ background: typeColors[index] }}
+            >
+              {type.type.name}
+            </span>
+          ))}
+        </p>
+      )}
+      <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>{name}</Modal.Title>
+          <Modal.Title>
+            {name.charAt(0).toUpperCase() + name.slice(1)}
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {sprites && (
-            <img
-              src={sprites.front_default}
-              alt={name}
-              className="modal-image"
-            />
-          )}
-          {types && (
-            <p>
-              Type:
-              {types.map((type) => (
-                <span key={type.type.name}> {type.type.name}</span>
-              ))}
-            </p>
-          )}
-          {stats && (
-            <p>
-              Stats:
-              {stats.map((stat) => (
-                <span key={stat.stat.name}>
-                  {" "}
-                  {stat.stat.name}:{stat.base_stat}
-                </span>
-              ))}
-            </p>
-          )}
-          {abilities && (
-            <p>
-              Abilities:
-              {abilities.map((ability) => (
-                <span key={ability.ability.name}> {ability.ability.name}</span>
-              ))}
-            </p>
-          )}
-          {height && <p>Height: {height / 10} m</p>}
-          {weight && <p>Weight: {weight / 10} kg</p>}
+          <Row>
+            <Col xs={4}>
+              {sprites && (
+                <img
+                  src={sprites.front_default}
+                  alt={name}
+                  className="modal-image"
+                />
+              )}
+            </Col>
+            <Col xs={8}>
+              {types && (
+                <p>
+                  <strong>Type:</strong>{" "}
+                  {types.map((type) => (
+                    <span
+                      key={type.type.name}
+                    >
+                      {type.type.name + ", "}
+                    </span>
+                  ))}
+                </p>
+              )}
+              {stats && (
+                <div>
+                  <strong>Stats:</strong>
+                  <ul>
+                    {stats.map((stat) => (
+                      <li key={stat.stat.name}>
+                        <span className="stat-name">{stat.stat.name}:</span>{" "}
+                        {stat.base_stat}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {abilities && (
+                <p>
+                  <strong>Abilities:</strong>{" "}
+                  {abilities.map((ability) => (
+                    <span key={ability.ability.name}>
+                      {ability.ability.name + ", "}
+                    </span>
+                  ))}
+                </p>
+              )}
+              {height && (
+                <p>
+                  <strong>Height:</strong> {height / 10} m
+                </p>
+              )}
+              {weight && (
+                <p>
+                  <strong>Weight:</strong> {weight / 10} kg
+                </p>
+              )}
+            </Col>
+          </Row>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={() => handleCloseModal()}>
+          <Button variant="primary" onClick={handleClose}>
             Close
           </Button>
         </Modal.Footer>

@@ -12,10 +12,10 @@ function App() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Link className="nav-link" to="/pokedex">
+            <Link className="nav-link" to="/WEB2-Assignment2/pokedex">
               Pokedex
             </Link>
-            <Link className="nav-link" to="/about">
+            <Link className="nav-link" to="/WEB2-Assignment2/about">
               About
             </Link>
           </Nav>
@@ -23,8 +23,8 @@ function App() {
       </Navbar>
 
       <Routes>
-        <Route path="/pokedex" element={<PokeList />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/WEB2-Assignment2/pokedex" element={<PokeList />} />
+        <Route path="/WEB2-Assignment2/about" element={<About />} />
       </Routes>
     </BrowserRouter>
   );
