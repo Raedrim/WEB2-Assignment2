@@ -6,7 +6,7 @@ import { Navbar, Nav } from "react-bootstrap";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/WEB2-Assignment2">
       <Navbar bg="light" expand="lg">
         <Navbar.Brand>Pokedex</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
